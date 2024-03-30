@@ -139,11 +139,11 @@ export function SignInForm(): React.JSX.Element {
         </Stack>
       </form>
       <Alert color="warning">
-        Use{' '}
+        Use
         <Typography component="span" sx={{ fontWeight: 700 }} variant="inherit">
           sofia@devias.io
-        </Typography>{' '}
-        with password{' '}
+        </Typography>
+        with password
         <Typography component="span" sx={{ fontWeight: 700 }} variant="inherit">
           Secret1
         </Typography>

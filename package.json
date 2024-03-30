@@ -1,7 +1,7 @@
 {
   "name": "material-kit-react",
   "version": "4.0.0",
-  "author": "Devias",
+  "author": "Bitfinex",
   "licence": "MIT",
   "homepage": "https://devias.io",
   "private": false,
@@ -36,6 +36,7 @@
     "react": "18.2.0",
     "react-apexcharts": "1.4.1",
     "react-dom": "18.2.0",
+    "react-google-login": "^5.2.2",
     "react-hook-form": "7.51.0",
     "zod": "3.22.4"
   },
