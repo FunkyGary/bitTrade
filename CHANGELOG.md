@@ -1,106 +1,89 @@
-# Changelog
+## 4.0.0 (2024-03-08)
 
-## v4.0.0
+* Fix open nav on mobile issue ([f4a7ef6](https://github.com/devias-io/material-kit-react/commit/f4a7ef6))
+* Migrate to App Router, add TypeScript, update styles ([b0a6bfb](https://github.com/devias-io/material-kit-react/commit/b0a6bfb))
+* Update deps ([aec888f](https://github.com/devias-io/material-kit-react/commit/aec888f))
+* Update Figma link ([d4e4d39](https://github.com/devias-io/material-kit-react/commit/d4e4d39))
+* Update thumbnail to match the new style ([c0d10ee](https://github.com/devias-io/material-kit-react/commit/c0d10ee))
 
-###### Mar 8, 2024
 
-- Add `TypeScript`
-- Refactor code
-- Replace `date-fns` with `dayjs`
-- Replace `Formik` with `React Hook Form`
-- Replace `Hero Icons` with `Phosphor Icons`
-- Replace `pages` router with `app router`
-- Replace `Yup` with `Zod`
-- Update `eslint` rules
-- Update auth implementation
-- Update dependencies
-- Update design system
 
-## v3.0.0
+## 3.0.0 (2023-02-24)
 
-###### Feb 24, 2023
+* Implement skip auth ([735cda9](https://github.com/devias-io/material-kit-react/commit/735cda9))
+* Make zalter.com a link ([06f2eb5](https://github.com/devias-io/material-kit-react/commit/06f2eb5))
+* Update design, components and auth ([79e8331](https://github.com/devias-io/material-kit-react/commit/79e8331))
+* Update package version ([90bf59c](https://github.com/devias-io/material-kit-react/commit/90bf59c))
 
-- Refactor components
-- Replace authentication
-- Update dependencies
-- Update design system
 
-## v2.1.0
 
-###### Sep 15, 2022
+## 2.1.0 (2022-09-15)
 
-- Integrate Zalter Authentication
-- Update dependencies
+* add eslint airbnb style guide and fix eslint errors ([fe425a9](https://github.com/devias-io/material-kit-react/commit/fe425a9))
+* Add Figma community file ([1b2d179](https://github.com/devias-io/material-kit-react/commit/1b2d179))
+* Add gitattributes ([ed70860](https://github.com/devias-io/material-kit-react/commit/ed70860))
+* Add new logo, favicon (#84) ([51f3bfe](https://github.com/devias-io/material-kit-react/commit/51f3bfe)), closes [#84](https://github.com/devias-io/material-kit-react/issues/84)
+* Add thumbnail ([a4e6312](https://github.com/devias-io/material-kit-react/commit/a4e6312))
+* Added figma file ([f58ea4a](https://github.com/devias-io/material-kit-react/commit/f58ea4a))
+* Added redirects file ([a2fc4b7](https://github.com/devias-io/material-kit-react/commit/a2fc4b7))
+* Change Hidden component props (#82) ([7606d65](https://github.com/devias-io/material-kit-react/commit/7606d65)), closes [#82](https://github.com/devias-io/material-kit-react/issues/82)
+* Change page titles (#85) ([9adea82](https://github.com/devias-io/material-kit-react/commit/9adea82)), closes [#85](https://github.com/devias-io/material-kit-react/issues/85)
+* change Pagination import, rename old m-ui props, remove m-ui lab dependency (#76) ([b409659](https://github.com/devias-io/material-kit-react/commit/b409659)), closes [#76](https://github.com/devias-io/material-kit-react/issues/76)
+* Delete yarn.lock ([833f8b6](https://github.com/devias-io/material-kit-react/commit/833f8b6))
+* Fix style ([1322c88](https://github.com/devias-io/material-kit-react/commit/1322c88))
+* Fixed bad redirect ([77f9833](https://github.com/devias-io/material-kit-react/commit/77f9833))
+* Fixed charts responsive ([f12f256](https://github.com/devias-io/material-kit-react/commit/f12f256))
+* Initial commit ([565d71d](https://github.com/devias-io/material-kit-react/commit/565d71d))
+* Made buttons small ([2fca6cd](https://github.com/devias-io/material-kit-react/commit/2fca6cd))
+* Migrate MUI to version 5.beta5 ([8e8abdc](https://github.com/devias-io/material-kit-react/commit/8e8abdc))
+* Migrate to Next.js, latest @mui packages and update design system ([f8ff62c](https://github.com/devias-io/material-kit-react/commit/f8ff62c))
+* remove Page component, use Helmet component in order to set the title in every page/view (#78) ([619b0ef](https://github.com/devias-io/material-kit-react/commit/619b0ef)), closes [#78](https://github.com/devias-io/material-kit-react/issues/78)
+* Removed extra padding ([e519ad7](https://github.com/devias-io/material-kit-react/commit/e519ad7))
+* Removed legend ([425c89a](https://github.com/devias-io/material-kit-react/commit/425c89a))
+* Removed unused componentes and updated styles ([8236249](https://github.com/devias-io/material-kit-react/commit/8236249))
+* Removed yarn.lock from ignored files ([7606a70](https://github.com/devias-io/material-kit-react/commit/7606a70))
+* replace makeStyles with experimentalStyled ([92b8e55](https://github.com/devias-io/material-kit-react/commit/92b8e55))
+* replace useStyles with sx where it can be used (#79) ([f0f13af](https://github.com/devias-io/material-kit-react/commit/f0f13af)), closes [#79](https://github.com/devias-io/material-kit-react/issues/79)
+* Update components ([7d30afc](https://github.com/devias-io/material-kit-react/commit/7d30afc))
+* Update dependencies and integrate Zalter authentication ([3f40541](https://github.com/devias-io/material-kit-react/commit/3f40541))
+* Update dependencies, make use of SX prop (#73) ([f8a7750](https://github.com/devias-io/material-kit-react/commit/f8a7750)), closes [#73](https://github.com/devias-io/material-kit-react/issues/73)
+* Update folder structure (#81) ([550f533](https://github.com/devias-io/material-kit-react/commit/550f533)), closes [#81](https://github.com/devias-io/material-kit-react/issues/81)
+* update npm and eslint ([79ca006](https://github.com/devias-io/material-kit-react/commit/79ca006))
+* Update package.json (#86) ([306539c](https://github.com/devias-io/material-kit-react/commit/306539c)), closes [#86](https://github.com/devias-io/material-kit-react/issues/86)
+* update react to the latest version, remove redundant React imports (#77) ([bfa415e](https://github.com/devias-io/material-kit-react/commit/bfa415e)), closes [#77](https://github.com/devias-io/material-kit-react/issues/77)
+* Update Readme ([44799b2](https://github.com/devias-io/material-kit-react/commit/44799b2))
+* Update README ([ffd250f](https://github.com/devias-io/material-kit-react/commit/ffd250f))
+* Update README ([d2e66ed](https://github.com/devias-io/material-kit-react/commit/d2e66ed))
+* Update README.md ([5c80c49](https://github.com/devias-io/material-kit-react/commit/5c80c49))
+* Update README.md ([3e74c66](https://github.com/devias-io/material-kit-react/commit/3e74c66))
+* Update README.md ([6a111db](https://github.com/devias-io/material-kit-react/commit/6a111db))
+* Update README.md ([a498c72](https://github.com/devias-io/material-kit-react/commit/a498c72))
+* Update README.md ([5504efc](https://github.com/devias-io/material-kit-react/commit/5504efc))
+* Update README.md ([2b7eb72](https://github.com/devias-io/material-kit-react/commit/2b7eb72))
+* Update README.md ([7cea2b3](https://github.com/devias-io/material-kit-react/commit/7cea2b3))
+* Update README.md ([006abeb](https://github.com/devias-io/material-kit-react/commit/006abeb))
+* Update README.md ([dce80fb](https://github.com/devias-io/material-kit-react/commit/dce80fb))
+* Update README.md ([b157770](https://github.com/devias-io/material-kit-react/commit/b157770))
+* Update README.md ([29d848c](https://github.com/devias-io/material-kit-react/commit/29d848c))
+* Update README.md ([546b5e0](https://github.com/devias-io/material-kit-react/commit/546b5e0))
+* Update README.md ([aea5c97](https://github.com/devias-io/material-kit-react/commit/aea5c97))
+* Update style ([7224599](https://github.com/devias-io/material-kit-react/commit/7224599))
+* Update theme palette (#83) ([72247a2](https://github.com/devias-io/material-kit-react/commit/72247a2)), closes [#83](https://github.com/devias-io/material-kit-react/issues/83)
+* Update title ([7cab86f](https://github.com/devias-io/material-kit-react/commit/7cab86f))
+* Updated changelog ([f064f2f](https://github.com/devias-io/material-kit-react/commit/f064f2f))
+* Updated changelog and project version ([7f07d05](https://github.com/devias-io/material-kit-react/commit/7f07d05))
+* Updated changelog and readme ([3d2bc9d](https://github.com/devias-io/material-kit-react/commit/3d2bc9d))
+* Updated components to hooks, FC and ajusted theme ([2846305](https://github.com/devias-io/material-kit-react/commit/2846305))
+* Updated grid and table cell padding ([3bc8106](https://github.com/devias-io/material-kit-react/commit/3bc8106))
+* Updated material-ui to v4 ([ce22133](https://github.com/devias-io/material-kit-react/commit/ce22133))
+* Updated package version ([b85db01](https://github.com/devias-io/material-kit-react/commit/b85db01))
+* Updated READM.md ([20cb92d](https://github.com/devias-io/material-kit-react/commit/20cb92d))
+* Updated Readme ([9354b7f](https://github.com/devias-io/material-kit-react/commit/9354b7f))
+* Updated README.md ([651c0aa](https://github.com/devias-io/material-kit-react/commit/651c0aa))
+* Updated README.md ([454c697](https://github.com/devias-io/material-kit-react/commit/454c697))
+* Updated styles ([6109c74](https://github.com/devias-io/material-kit-react/commit/6109c74))
+* Updated to functional components ([c478380](https://github.com/devias-io/material-kit-react/commit/c478380))
+* Updating packages and fixing deprecated for spacing ([202314c](https://github.com/devias-io/material-kit-react/commit/202314c))
 
-## v2.0.0
 
-###### Nov 8, 2021
 
-- Migrate to Next.js
-- Update design system
-
-# Change Log
-
-## v1.0.0
-
-###### Aug 7, 2020
-
-- Add `eslint`
-- Add `Feather Icons`
-- Add `Formik` for login/register pages
-- Implement `react-router` v6 routing method
-- Remove `node-sass` dependency
-- Remove extra views
-- Update all components to match the PRO version style
-- Update dependencies
-- Update folder structure to remove folder depth
-- Update theme configuration
-
-## v0.4.0
-
-###### Jul 24, 2019
-
-- Adjust theme colors
-- Implement `useStyle` hook instead of `withStyles` HOC
-- Implement a custom Route component to wrap views in layouts
-- Remove `services` and `data` folders, each component has its own data
-- Remove unused `.scss` files from `assets` folder
-- Replace `.jsx` with `.js`
-- Replace Class Components with Function Components
-- Replace custom components (Portlet) with Material-UI built-in components
-- Replace dependency `classnames` with `clsx`
-- Update dependencies
-- Update the layout to match the PRO version
-
-## v0.3.0
-
-###### May 13, 2019
-
-- Implement `jsconfig.json` file and removed `.env` to match React v16.8.6 absolute paths
-- Update chart styles and options
-- Update Dashboard view top widgets styles and structure
-- Update few icons to match @material-ui v4 updates
-- Update React version to 16.8.6 to support React Hooks
-- Update to @material-ui to 4.0.0-beta
-
-## v0.2.0
-
-###### May 11, 2019
-
-- Add docs for IE11 polyfill
-- Fix `DisplayMode` component size, when used as a flex child it could grow/shrink
-- Fix `ProductCard` component description height
-- Fix `Typography` view responsiveness for small devices
-- Fix charts responsiveness
-- Remove "status" from `ProductCard` component since it was not part of released design
-- Remove `auth` service folder since it won't be implemented for this version
-- Remove `authGuard` since it won't be used in this version
-- Remove unused components from shared components
-- Remove unused scss from assets
-- Update README.md
-
-## v0.1.0
-
-###### May 2, 2019
-
-### Initial commit
