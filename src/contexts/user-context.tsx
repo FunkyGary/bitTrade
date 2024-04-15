@@ -37,14 +37,14 @@ export function UserProvider({ children }: UserProviderProps): React.JSX.Element
       }
 
       setState((prev) => ({ ...prev, user: data ?? null, error: null, isLoading: false }));
-    } catch (err) {
+    } catch (err: unknown) {
       logger.error(err);
       setState((prev) => ({ ...prev, user: null, error: 'Something went wrong', isLoading: false }));
     }
   }, []);
 
   React.useEffect(() => {
-    checkSession().catch((err) => {
+    checkSession().catch((err: unknown) => {
       logger.error(err);
       // noop
     });
