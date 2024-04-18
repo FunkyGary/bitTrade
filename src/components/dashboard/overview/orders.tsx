@@ -17,7 +17,7 @@ export interface SalesProps {
   sx?: SxProps;
 }
 
-export function Sales({ chartSeries, sx }: SalesProps): React.JSX.Element {
+export function Orders({ chartSeries, sx }: SalesProps): React.JSX.Element {
   const chartOptions = useChartOptions();
 
   return (
@@ -31,7 +31,7 @@ export function Sales({ chartSeries, sx }: SalesProps): React.JSX.Element {
         title="Sales"
       />
       <CardContent>
-        <Chart height={350} options={chartOptions} series={chartSeries} type="line" width="100%" />
+        <Chart height={350} options={chartOptions} series={chartSeries} type="bar" width="100%" />
       </CardContent>
     </Card>
   );
