@@ -35,7 +35,7 @@ class AuthClient {
     // Make API request
 
     // We do not handle the API, so we'll just generate a token and store it in localStorage.
-    localStorage.setItem('custom-auth-token', token);
+    localStorage.setItem('auth-token', token);
 
     return {};
   }
@@ -71,7 +71,7 @@ class AuthClient {
     // Make API request
 
     // We do not handle the API, so just check if we have a token in localStorage.
-    const token = localStorage.getItem('custom-auth-token');
+    const token = localStorage.getItem('auth-token');
 
     if (!token) {
       return { data: null };
@@ -81,7 +81,7 @@ class AuthClient {
   }
 
   async signOut(): Promise<{ error?: string }> {
-    localStorage.removeItem('custom-auth-token');
+    localStorage.removeItem('auth-token');
 
     return {};
   }
