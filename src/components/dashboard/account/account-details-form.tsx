@@ -28,7 +28,7 @@ export function AccountDetailsForm(): React.JSX.Element {
       return res.data.data;
     },
   });
-  console.log(data);
+
   return (
     <form
       onSubmit={(event) => {
@@ -71,36 +71,6 @@ export function AccountDetailsForm(): React.JSX.Element {
               ))}
             </Grid>
 
-            // {            data.map(e=>{
-            //                       switch (e.exchange) {
-            //           case '"Bitfinex"':
-            //             return (<>              <Grid xs={12}>
-            //                 <Box
-            //                   component="img"
-            //                   sx={{
-            //                     maxWidth: { xs: 250, md: 150 },
-            //                   }}
-            //                   alt="Bitinex"
-            //                   src="/assets/Bitinex.png"
-            //                 />
-            //               </Grid>
-            //               <Grid md={6} xs={12}>
-            //                 <FormControl fullWidth required>
-            //                   <InputLabel>Bitfinex API key</InputLabel>
-            //                   <OutlinedInput defaultValue="geij1=i1" label="Bitfinex API key" />
-            //                 </FormControl>
-            //               </Grid>
-            //               <Grid md={6} xs={12}>
-            //                 <FormControl fullWidth required>
-            //                   <InputLabel>Bitfinex secret</InputLabel>
-            //                   <OutlinedInput defaultValue="geij1=i1" label="Bitfinex secret" />
-            //                 </FormControl>
-            //               </Grid></>);
-            //             break;
-            //           default:
-            //             return;
-            //         }
-            //             })}
             // <Grid container spacing={3}>
             //   <Grid xs={12}>
             //     <Box
@@ -173,7 +143,9 @@ export function AccountDetailsForm(): React.JSX.Element {
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">Save</Button>
+          <Button type="submit" variant="contained">
+            Save
+          </Button>
         </CardActions>
       </Card>
     </form>

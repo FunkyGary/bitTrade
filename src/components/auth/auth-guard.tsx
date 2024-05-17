@@ -15,19 +15,14 @@ export interface AuthGuardProps {
 export function AuthGuard({ children }: AuthGuardProps): React.JSX.Element | null {
   const router = useRouter();
   const { user, error, isLoading } = useUser();
-  const [isChecking, setIsChecking] = React.useState<boolean>(true);
-
+  const [isChecking, setIsChecking] = React.useState<boolean>(false);
+  console.log(user, error);
   const checkPermissions = async (): Promise<void> => {
     if (isLoading) {
       return;
     }
 
-    if (error) {
-      setIsChecking(false);
-      return;
-    }
-
-    if (!user) {
+    if (!user || error) {
       logger.debug('[AuthGuard]: User is not logged in, redirecting to sign in');
       router.replace(paths.auth.signIn);
       return;

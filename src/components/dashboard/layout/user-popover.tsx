@@ -13,7 +13,7 @@ import { SignOut as SignOutIcon } from '@phosphor-icons/react/dist/ssr/SignOut';
 import { User as UserIcon } from '@phosphor-icons/react/dist/ssr/User';
 
 import { paths } from '@/paths';
-import { authClient } from '@/lib/auth/client';
+// import { AuthClient } from '@/lib/auth/client';
 import { logger } from '@/lib/default-logger';
 import { useUser } from '@/hooks/use-user';
 
@@ -30,12 +30,13 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
 
   const handleSignOut = React.useCallback(async (): Promise<void> => {
     try {
-      const { error } = await authClient.signOut();
+      // const { error } = await AuthClient.signOut();
+      localStorage.removeItem('auth-token');
 
-      if (error) {
-        logger.error('Sign out error', error);
-        return;
-      }
+      // if (error) {
+      //   logger.error('Sign out error', error);
+      //   return;
+      // }
 
       // Refresh the auth state
       await checkSession?.();

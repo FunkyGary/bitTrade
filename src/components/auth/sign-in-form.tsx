@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -12,6 +12,7 @@ import GoogleButton from 'react-google-button';
 import { Controller, useForm } from 'react-hook-form';
 import { z as zod } from 'zod';
 
+import { paths } from '@/paths';
 import { useUser } from '@/hooks/use-user';
 
 const schema = zod.object({
@@ -35,7 +36,7 @@ export function SignInForm(): React.JSX.Element {
   } = useForm<Values>({ defaultValues, resolver: zodResolver(schema) });
 
   useQuery({
-    queryKey: ['repoData'],
+    queryKey: ['getToken'],
     queryFn: async () => {
       const res = await axios.get('https://api.besttrade.company/api/v1/user/oauth/google_callback', {
         headers: {
@@ -43,8 +44,9 @@ export function SignInForm(): React.JSX.Element {
         },
       });
       localStorage.setItem('auth-token', res.data.data.token);
+      await checkSession?.();
       router.refresh();
-      return res;
+      redirect(paths.dashboard.overview);
     },
     enabled: !!token?.access_token,
   });

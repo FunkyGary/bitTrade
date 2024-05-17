@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { redirect } from 'next/navigation';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -13,6 +14,8 @@ import Typography from '@mui/material/Typography';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { paths } from '@/paths';
+
 const user = {
   name: 'Sofia Rivers',
   avatar: '/assets/avatar.png',
@@ -23,7 +26,7 @@ const user = {
 } as const;
 
 export function AccountInfo(): React.JSX.Element {
-  const { isLoading, data } = useQuery({
+  const { isLoading, data, error } = useQuery({
     queryKey: ['getMe'],
     queryFn: async () => {
       const res = await axios.get('https://api.besttrade.company/api/v1/user/me', {
@@ -34,6 +37,10 @@ export function AccountInfo(): React.JSX.Element {
       return res.data.data.user;
     },
   });
+
+  if (error) {
+    redirect(paths.auth.signIn);
+  }
 
   return (
     <Card>
