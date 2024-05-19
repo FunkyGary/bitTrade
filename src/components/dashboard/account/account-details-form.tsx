@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { redirect } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -16,8 +17,10 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { paths } from '@/paths';
+
 export function AccountDetailsForm(): React.JSX.Element {
-  const { isLoading, data } = useQuery({
+  const { isLoading, error, data } = useQuery({
     queryKey: ['getExchangeApi'],
     queryFn: async () => {
       const res = await axios.get('https://api.besttrade.company/api/v1/user/exchange-api', {
@@ -28,6 +31,12 @@ export function AccountDetailsForm(): React.JSX.Element {
       return res.data.data;
     },
   });
+
+  console.log(error, data);
+
+  if (error) {
+    redirect(paths.auth.signIn);
+  }
 
   return (
     <form

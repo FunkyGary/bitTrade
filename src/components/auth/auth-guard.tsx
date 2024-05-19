@@ -16,8 +16,10 @@ export function AuthGuard({ children }: AuthGuardProps): React.JSX.Element | nul
   const router = useRouter();
   const { user, error, isLoading } = useUser();
   const [isChecking, setIsChecking] = React.useState<boolean>(false);
-  console.log(user, error);
   const checkPermissions = async (): Promise<void> => {
+    if (user) {
+      router.replace(paths.dashboard.overview);
+    }
     if (isLoading) {
       return;
     }
@@ -42,9 +44,10 @@ export function AuthGuard({ children }: AuthGuardProps): React.JSX.Element | nul
     return null;
   }
 
-  if (error) {
-    return <Alert color="error">{error}</Alert>;
-  }
+  // if (error) {
+  //   router.replace(paths.auth.signIn);
+  //   // return <Alert color="error">{error}</Alert>;
+  // }
 
   return <React.Fragment>{children}</React.Fragment>;
 }

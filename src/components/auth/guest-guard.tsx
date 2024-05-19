@@ -48,7 +48,8 @@ export function GuestGuard({ children }: GuestGuardProps): React.JSX.Element | n
   }
 
   if (error) {
-    return <Alert color="error">{error}</Alert>;
+    router.replace(paths.auth.signIn);
+    // return <Alert color="error">{error}</Alert>;
   }
 
   return <React.Fragment>{children}</React.Fragment>;

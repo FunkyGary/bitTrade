@@ -45,8 +45,9 @@ export function SignInForm(): React.JSX.Element {
       });
       localStorage.setItem('auth-token', res.data.data.token);
       await checkSession?.();
-      router.refresh();
-      redirect(paths.dashboard.overview);
+      // router.refresh();
+      console.log(localStorage.getItem('auth-token'));
+      router.replace(paths.dashboard.overview);
     },
     enabled: !!token?.access_token,
   });

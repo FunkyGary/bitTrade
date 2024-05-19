@@ -15,8 +15,9 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { paths } from '@/paths';
+import { useUser } from '@/hooks/use-user';
 
-const user = {
+const defaultUser = {
   name: 'Sofia Rivers',
   avatar: '/assets/avatar.png',
   jobTitle: 'Senior Developer',
@@ -26,6 +27,9 @@ const user = {
 } as const;
 
 export function AccountInfo(): React.JSX.Element {
+  // const { user, error, isLoading,checkSession } = useUser();
+  //   await checkSession?.();
+  // console.log(user);
   const { isLoading, data, error } = useQuery({
     queryKey: ['getMe'],
     queryFn: async () => {
@@ -37,6 +41,7 @@ export function AccountInfo(): React.JSX.Element {
       return res.data.data.user;
     },
   });
+  console.log(error, data);
 
   if (error) {
     redirect(paths.auth.signIn);
@@ -51,7 +56,7 @@ export function AccountInfo(): React.JSX.Element {
           <>
             <Stack spacing={2} sx={{ alignItems: 'center' }}>
               <div>
-                <Avatar src={data.image ? data.image : user.avatar} sx={{ height: '80px', width: '80px' }} />
+                <Avatar src={data?.image ? data.image : defaultUser.avatar} sx={{ height: '80px', width: '80px' }} />
               </div>
               <Stack spacing={1} sx={{ textAlign: 'center' }}>
                 <Typography variant="h5">{data.username}</Typography>

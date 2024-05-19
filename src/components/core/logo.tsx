@@ -22,7 +22,11 @@ export interface LogoProps {
 export function Logo({ color = 'dark', emblem, height = HEIGHT, width = WIDTH }: LogoProps): React.JSX.Element {
   let url: string;
 
-  return <Typography variant="h5">Best Trade</Typography>;
+  return (
+    <Typography variant="h5" sx={color === 'light' ? { color: 'white' } : null}>
+      Best Trade
+    </Typography>
+  );
 }
 
 export interface DynamicLogoProps {
@@ -42,7 +46,6 @@ export function DynamicLogo({
 }: DynamicLogoProps): React.JSX.Element {
   const { colorScheme } = useColorScheme();
   const color = colorScheme === 'dark' ? colorDark : colorLight;
-
   return (
     <NoSsr fallback={<Box sx={{ height: height, width: width }} />}>
       <Logo color={color} height={height} width={width} {...props} />
