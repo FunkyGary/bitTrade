@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import Alert from '@mui/material/Alert';
 
 import { paths } from '@/paths';
 import { logger } from '@/lib/default-logger';
@@ -14,17 +13,17 @@ export interface AuthGuardProps {
 
 export function AuthGuard({ children }: AuthGuardProps): React.JSX.Element | null {
   const router = useRouter();
-  const { user, error, isLoading } = useUser();
+  const { error, isLoading } = useUser();
   const [isChecking, setIsChecking] = React.useState<boolean>(false);
   const checkPermissions = async (): Promise<void> => {
-    if (user) {
+    if (localStorage.getItem('auth-token')) {
       router.replace(paths.dashboard.overview);
     }
     if (isLoading) {
       return;
     }
 
-    if (!user || error) {
+    if (error) {
       logger.debug('[AuthGuard]: User is not logged in, redirecting to sign in');
       router.replace(paths.auth.signIn);
       return;
@@ -38,16 +37,11 @@ export function AuthGuard({ children }: AuthGuardProps): React.JSX.Element | nul
       // noop
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Expected
-  }, [user, error, isLoading]);
+  }, [error, isLoading]);
 
   if (isChecking) {
     return null;
   }
-
-  // if (error) {
-  //   router.replace(paths.auth.signIn);
-  //   // return <Alert color="error">{error}</Alert>;
-  // }
 
   return <React.Fragment>{children}</React.Fragment>;
 }

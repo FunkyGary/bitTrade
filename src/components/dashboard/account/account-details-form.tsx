@@ -11,28 +11,36 @@ import CardHeader from '@mui/material/CardHeader';
 import CircularProgress from '@mui/material/CircularProgress';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
+import Grid from '@mui/material/Grid';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import Grid from '@mui/material/Unstable_Grid2';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { paths } from '@/paths';
 
-export function AccountDetailsForm(): React.JSX.Element {
-  const { isLoading, error, data } = useQuery({
+interface ExchangeApiData {
+  id: string;
+  exchange: string;
+  key: string;
+  secret: string;
+}
+
+export function AccountDetailsForm(): React.ReactElement {
+  const authToken = localStorage.getItem('auth-token');
+  const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
+  const { isLoading, error, data } = useQuery<ExchangeApiData[]>({
     queryKey: ['getExchangeApi'],
     queryFn: async () => {
-      const res = await axios.get('https://api.besttrade.company/api/v1/user/exchange-api', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('auth-token')}`,
-        },
-      });
+      const res = await axios.get<{ data: ExchangeApiData[] }>(
+        'https://api.besttrade.company/api/v1/user/exchange-api',
+        {
+          headers: headers,
+        }
+      );
       return res.data.data;
     },
   });
-
-  console.log(error, data);
 
   if (error) {
     redirect(paths.auth.signIn);
@@ -52,9 +60,9 @@ export function AccountDetailsForm(): React.JSX.Element {
             <CircularProgress />
           ) : (
             <Grid container spacing={3}>
-              {data.map((e) => (
-                <>
-                  <Grid xs={12} key={e.id}>
+              {data?.map((e) => (
+                <React.Fragment key={e.id}>
+                  <Grid item xs={12}>
                     <Box
                       component="img"
                       sx={{
@@ -64,90 +72,21 @@ export function AccountDetailsForm(): React.JSX.Element {
                       src={`/assets/${e.exchange}.png`}
                     />
                   </Grid>
-                  <Grid md={6} xs={12}>
+                  <Grid item md={6} xs={12}>
                     <FormControl fullWidth required>
-                      <InputLabel>{e.exchange} API key</InputLabel>
+                      <InputLabel>{`${e.exchange} API key`}</InputLabel>
                       <OutlinedInput value={e.key} label={`${e.exchange} API key`} />
                     </FormControl>
                   </Grid>
-                  <Grid md={6} xs={12}>
+                  <Grid item md={6} xs={12}>
                     <FormControl fullWidth required>
-                      <InputLabel>{e.exchange} secret</InputLabel>
+                      <InputLabel>{`${e.exchange} secret`}</InputLabel>
                       <OutlinedInput value={e.secret} label={`${e.exchange} secret`} />
                     </FormControl>
                   </Grid>
-                </>
+                </React.Fragment>
               ))}
             </Grid>
-
-            // <Grid container spacing={3}>
-            //   <Grid xs={12}>
-            //     <Box
-            //       component="img"
-            //       sx={{
-            //         maxWidth: { xs: 250, md: 150 },
-            //       }}
-            //       alt="Binance"
-            //       src="/assets/Binance.png"
-            //     />
-            //   </Grid>
-            //   <Grid md={6} xs={12}>
-            //     <FormControl fullWidth required>
-            //       <InputLabel>Binance API key</InputLabel>
-            //       <OutlinedInput defaultValue="geij1=i1" label="Binance API key" />
-            //     </FormControl>
-            //   </Grid>
-            //   <Grid md={6} xs={12}>
-            //     <FormControl fullWidth required>
-            //       <InputLabel>Binance secret</InputLabel>
-            //       <OutlinedInput defaultValue="geij1=i1" label="Binance secret" />
-            //     </FormControl>
-            //   </Grid>
-            //   <Grid xs={12}>
-            //     <Box
-            //       component="img"
-            //       sx={{
-            //         maxWidth: { xs: 250, md: 150 },
-            //       }}
-            //       alt="OKX"
-            //       src="/assets/OKX.svg"
-            //     />
-            //   </Grid>
-            //   <Grid md={6} xs={12}>
-            //     <FormControl fullWidth required>
-            //       <InputLabel>OKX API key</InputLabel>
-            //       <OutlinedInput defaultValue="geij1=i1" label="OKX API key" />
-            //     </FormControl>
-            //   </Grid>
-            //   <Grid md={6} xs={12}>
-            //     <FormControl fullWidth required>
-            //       <InputLabel>OKX secret</InputLabel>
-            //       <OutlinedInput defaultValue="geij1=i1" label="OKX secret" />
-            //     </FormControl>
-            //   </Grid>
-            //   <Grid xs={12}>
-            //     <Box
-            //       component="img"
-            //       sx={{
-            //         maxWidth: { xs: 250, md: 150 },
-            //       }}
-            //       alt="max exchange"
-            //       src="/assets/max-exchange-logo.png"
-            //     />
-            //   </Grid>
-            //   <Grid md={6} xs={12}>
-            //     <FormControl fullWidth required>
-            //       <InputLabel>Max API key</InputLabel>
-            //       <OutlinedInput defaultValue="geij1=i1" label="Max API key" />
-            //     </FormControl>
-            //   </Grid>
-            //   <Grid md={6} xs={12}>
-            //     <FormControl fullWidth required>
-            //       <InputLabel>Max secret</InputLabel>
-            //       <OutlinedInput defaultValue="geij1=i1" label="Max secret" />
-            //     </FormControl>
-            //   </Grid>
-            // </Grid>
           )}
         </CardContent>
         <Divider />

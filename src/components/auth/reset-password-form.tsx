@@ -13,8 +13,6 @@ import Typography from '@mui/material/Typography';
 import { Controller, useForm } from 'react-hook-form';
 import { z as zod } from 'zod';
 
-import AuthClient from '@/lib/auth/client';
-
 const schema = zod.object({ email: zod.string().min(1, { message: 'Email is required' }).email() });
 
 type Values = zod.infer<typeof schema>;
@@ -31,24 +29,21 @@ export function ResetPasswordForm(): React.JSX.Element {
     formState: { errors },
   } = useForm<Values>({ defaultValues, resolver: zodResolver(schema) });
 
-  const onSubmit = React.useCallback(
-    async (values: Values): Promise<void> => {
-      setIsPending(true);
+  const onSubmit = React.useCallback(async (): Promise<void> => {
+    setIsPending(true);
 
-      // const { error } = await AuthClient.resetPassword(values);
-      const error = false;
-      if (error) {
-        setError('root', { type: 'server', message: error });
-        setIsPending(false);
-        return;
-      }
-
+    // const { error } = await AuthClient.resetPassword(values);
+    const error = false;
+    if (error) {
+      setError('root', { type: 'server', message: error });
       setIsPending(false);
+      return;
+    }
 
-      // Redirect to confirm password reset
-    },
-    [setError]
-  );
+    setIsPending(false);
+
+    // Redirect to confirm password reset
+  }, [setError]);
 
   return (
     <Stack spacing={4}>

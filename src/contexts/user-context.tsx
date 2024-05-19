@@ -1,12 +1,8 @@
-'use client';
-
-import { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 import type { User } from '@/types/user';
-// import AuthClient from '@/lib/auth/client';
-import { logger } from '@/lib/default-logger';
 
 export interface UserContextValue {
   user: User | null;
@@ -21,25 +17,20 @@ export interface UserProviderProps {
   children: React.ReactNode;
 }
 
-export function UserProvider({ children }: UserProviderProps): React.JSX.Element {
-  const [state, setState] = useState<{ user: User | null; error: string | null; isLoading: boolean }>({
+export function UserProvider({ children }: UserProviderProps): React.ReactElement {
+  const [state, setState] = useState<UserContextValue>({
     user: null,
     error: null,
     isLoading: true,
   });
 
   const fetchUser = async (): Promise<User | null> => {
-    try {
-      const res = await axios.get('https://api.besttrade.company/api/v1/user/me', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('auth-token')}`,
-        },
-      });
-      return res.data.data.user;
-    } catch (error) {
-      console.error('Error fetching user:', error);
-      throw error;
-    }
+    const authToken = localStorage.getItem('auth-token');
+    const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
+    const res = await axios.get<{ data: { user: User } }>('https://api.besttrade.company/api/v1/user/me', {
+      headers: headers,
+    });
+    return res.data.data.user;
   };
 
   const {
@@ -53,7 +44,6 @@ export function UserProvider({ children }: UserProviderProps): React.JSX.Element
 
   useEffect(() => {
     if (userError) {
-      console.error('Error fetching user:', userError);
       setState({ user: null, error: 'Something went wrong', isLoading: false });
     } else {
       setState({ user: userData ?? null, error: null, isLoading: userIsLoading });
