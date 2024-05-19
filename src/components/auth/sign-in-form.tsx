@@ -15,6 +15,7 @@ import { paths } from '@/paths';
 export function SignInForm(): React.ReactElement {
   const router = useRouter();
   const [token, setToken] = React.useState<string | undefined>();
+  const [loginErrorMsg, setLoginErrorMsg] = React.useState<string | undefined>();
 
   const { data, error } = useQuery<string>({
     queryKey: ['getToken'],

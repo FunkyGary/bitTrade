@@ -32,7 +32,8 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
     try {
       // const { error } = await AuthClient.signOut();
       localStorage.removeItem('auth-token');
-
+      console.log(localStorage.getItem('auth-token'));
+      router.replace(paths.auth.signIn);
       // if (error) {
       //   logger.error('Sign out error', error);
       //   return;

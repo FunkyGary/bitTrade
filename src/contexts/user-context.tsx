@@ -21,34 +21,34 @@ export function UserProvider({ children }: UserProviderProps): React.ReactElemen
   const [state, setState] = useState<UserContextValue>({
     user: null,
     error: null,
-    isLoading: true,
+    isLoading: false,
   });
 
-  const fetchUser = async (): Promise<User | null> => {
-    const authToken = localStorage.getItem('auth-token');
-    const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
-    const res = await axios.get<{ data: { user: User } }>('https://api.besttrade.company/api/v1/user/me', {
-      headers: headers,
-    });
-    return res.data.data.user;
-  };
+  // const fetchUser = async (): Promise<User | null> => {
+  //   const authToken = localStorage.getItem('auth-token');
+  //   const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
+  //   const res = await axios.get<{ data: { user: User } }>('https://api.besttrade.company/api/v1/user/me', {
+  //     headers: headers,
+  //   });
+  //   return res.data.data.user;
+  // };
 
-  const {
-    data: userData,
-    error: userError,
-    isLoading: userIsLoading,
-  } = useQuery<User | null>({
-    queryKey: ['getUser'],
-    queryFn: fetchUser,
-  });
+  // const {
+  //   data: userData,
+  //   error: userError,
+  //   isLoading: userIsLoading,
+  // } = useQuery<User | null>({
+  //   queryKey: ['getUser'],
+  //   queryFn: fetchUser,
+  // });
 
-  useEffect(() => {
-    if (userError) {
-      setState({ user: null, error: 'Something went wrong', isLoading: false });
-    } else {
-      setState({ user: userData ?? null, error: null, isLoading: userIsLoading });
-    }
-  }, [userData, userError, userIsLoading]);
+  // useEffect(() => {
+  //   if (userError) {
+  //     setState({ user: null, error: 'Something went wrong', isLoading: false });
+  //   } else {
+  //     setState({ user: userData ?? null, error: null, isLoading: userIsLoading });
+  //   }
+  // }, [userData, userError, userIsLoading]);
 
   return <UserContext.Provider value={{ ...state }}>{children}</UserContext.Provider>;
 }
