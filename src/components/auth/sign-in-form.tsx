@@ -27,7 +27,7 @@ const defaultValues = { email: 'sofia@devias.io', password: 'Secret1' } satisfie
 export function SignInForm(): React.JSX.Element {
   const router = useRouter();
   const { checkSession } = useUser();
-  const [token, setToken] = React.useState();
+  const [token, setToken] = React.useState<string>();
   const {
     control,
     handleSubmit,
@@ -40,7 +40,7 @@ export function SignInForm(): React.JSX.Element {
     queryFn: async () => {
       const res = await axios.get('https://api.besttrade.company/api/v1/user/oauth/google_callback', {
         headers: {
-          Authorization: `Bearer ${token.access_token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       localStorage.setItem('auth-token', res.data.data.token);
@@ -49,7 +49,7 @@ export function SignInForm(): React.JSX.Element {
       console.log(localStorage.getItem('auth-token'));
       router.replace(paths.dashboard.overview);
     },
-    enabled: !!token?.access_token,
+    enabled: !!token,
   });
 
   // const onSubmit = React.useCallback(
@@ -76,7 +76,7 @@ export function SignInForm(): React.JSX.Element {
 
   const login = useGoogleLogin({
     onSuccess: (tokenResponse: { access_token: string }) => {
-      setToken(tokenResponse);
+      setToken(tokenResponse.access_token);
       // UserProvider, for this case, will not refresh the router
       // After refresh, GuestGuard will handle the redirect
     },
