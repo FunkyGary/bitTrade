@@ -11,27 +11,13 @@ import Typography from '@mui/material/Typography';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { User } from '@/types/user';
 import { paths } from '@/paths';
 
-interface User {
-  name: string;
-  avatar: string;
-  jobTitle: string;
-  country: string;
-  city: string;
-  timezone: string;
-  username: string;
-  email: string;
-  bio: string;
-}
-
 const defaultUser: User = {
+  id: '1',
   name: 'Sofia Rivers',
   avatar: '/assets/avatar.png',
-  jobTitle: 'Senior Developer',
-  country: 'USA',
-  city: 'Los Angeles',
-  timezone: 'GTM-7',
   username: '',
   email: '',
   bio: '',

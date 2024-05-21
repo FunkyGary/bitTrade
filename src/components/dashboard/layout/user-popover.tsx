@@ -1,6 +1,6 @@
 import * as React from 'react';
 import RouterLink from 'next/link';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -11,9 +11,11 @@ import Typography from '@mui/material/Typography';
 import { GearSix as GearSixIcon } from '@phosphor-icons/react/dist/ssr/GearSix';
 import { SignOut as SignOutIcon } from '@phosphor-icons/react/dist/ssr/SignOut';
 import { User as UserIcon } from '@phosphor-icons/react/dist/ssr/User';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
+import { User } from '@/types/user';
 import { paths } from '@/paths';
-// import { AuthClient } from '@/lib/auth/client';
 import { logger } from '@/lib/default-logger';
 import { useUser } from '@/hooks/use-user';
 
@@ -26,6 +28,26 @@ export interface UserPopoverProps {
 export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): React.JSX.Element {
   const { checkSession } = useUser();
 
+  const authToken = localStorage.getItem('auth-token');
+  const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
+
+  const { isLoading, data, error } = useQuery<User>({
+    queryKey: ['getMe'],
+    queryFn: async () => {
+      const res = await axios.get<User>('https://api.besttrade.company/api/v1/user/me', {
+        headers: headers,
+      });
+      return res.data;
+    },
+  });
+
+  React.useEffect(() => {
+    if (error) {
+      localStorage.removeItem('auth-token');
+      redirect(paths.auth.signIn);
+    }
+  }, [error]);
+
   const router = useRouter();
 
   const handleSignOut = React.useCallback(async (): Promise<void> => {
@@ -34,10 +56,6 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
       localStorage.removeItem('auth-token');
       console.log(localStorage.getItem('auth-token'));
       router.replace(paths.auth.signIn);
-      // if (error) {
-      //   logger.error('Sign out error', error);
-      //   return;
-      // }
 
       // Refresh the auth state
       await checkSession?.();
@@ -59,25 +77,13 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
       slotProps={{ paper: { sx: { width: '240px' } } }}
     >
       <Box sx={{ p: '16px 20px ' }}>
-        <Typography variant="subtitle1">Sofia Rivers</Typography>
+        <Typography variant="subtitle1">{data?.name}</Typography>
         <Typography color="text.secondary" variant="body2">
-          sofia.rivers@devias.io
+          {data?.email}
         </Typography>
       </Box>
       <Divider />
       <MenuList disablePadding sx={{ p: '8px', '& .MuiMenuItem-root': { borderRadius: 1 } }}>
-        <MenuItem component={RouterLink} href={paths.dashboard.settings} onClick={onClose}>
-          <ListItemIcon>
-            <GearSixIcon fontSize="var(--icon-fontSize-md)" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem component={RouterLink} href={paths.dashboard.account} onClick={onClose}>
-          <ListItemIcon>
-            <UserIcon fontSize="var(--icon-fontSize-md)" />
-          </ListItemIcon>
-          Profile
-        </MenuItem>
         <MenuItem onClick={handleSignOut}>
           <ListItemIcon>
             <SignOutIcon fontSize="var(--icon-fontSize-md)" />
