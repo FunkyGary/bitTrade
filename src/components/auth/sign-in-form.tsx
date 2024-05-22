@@ -24,7 +24,7 @@ export function SignInForm(): React.ReactElement {
         'https://api.besttrade.company/api/v1/user/oauth/google_callback',
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: token,
           },
         }
       );

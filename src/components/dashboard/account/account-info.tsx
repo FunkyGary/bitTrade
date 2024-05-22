@@ -17,7 +17,7 @@ import { paths } from '@/paths';
 const defaultUser: User = {
   id: '1',
   name: 'Sofia Rivers',
-  avatar: '/assets/avatar.png',
+  image: '/assets/avatar.png',
   username: '',
   email: '',
   bio: '',
@@ -33,10 +33,10 @@ export function AccountInfo(): React.ReactElement {
   const { isLoading, data, error } = useQuery<User>({
     queryKey: ['getMe'],
     queryFn: async () => {
-      const res = await axios.get<User>('https://api.besttrade.company/api/v1/user/me', {
-        headers: headers,
+      const res = await axios.get<{ data: { user: User } }>('https://api.besttrade.company/api/v1/user/me', {
+        headers,
       });
-      return res.data;
+      return res.data.data.user;
     },
   });
 
@@ -55,7 +55,7 @@ export function AccountInfo(): React.ReactElement {
           <>
             <Stack spacing={2} sx={{ alignItems: 'center' }}>
               <div>
-                <Avatar src={data?.avatar ? data.avatar : defaultUser.avatar} sx={{ height: '80px', width: '80px' }} />
+                <Avatar src={data?.image ? data.image : defaultUser.image} sx={{ height: '80px', width: '80px' }} />
               </div>
               <Stack spacing={1} sx={{ textAlign: 'center' }}>
                 <Typography variant="h5">{data?.username}</Typography>
