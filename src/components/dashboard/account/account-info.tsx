@@ -24,7 +24,10 @@ const defaultUser: User = {
 };
 
 export function AccountInfo(): React.ReactElement {
-  const authToken = localStorage.getItem('auth-token');
+  let authToken;
+  if (typeof window !== 'undefined') {
+    authToken = sessionStorage.getItem('auth-token') ? sessionStorage.getItem('auth-token') : '';
+  }
   const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
 
   const { isLoading, data, error } = useQuery<User>({

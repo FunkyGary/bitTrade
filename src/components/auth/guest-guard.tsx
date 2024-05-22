@@ -25,7 +25,7 @@ export function GuestGuard({ children }: GuestGuardProps): React.JSX.Element | n
       return;
     }
 
-    if (localStorage.getItem('auth-token')) {
+    if (sessionStorage.getItem('auth-token')) {
       router.replace(paths.dashboard.overview);
       return;
     }

@@ -1,6 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import React, { createContext } from 'react';
 
 import type { User } from '@/types/user';
 
@@ -18,14 +16,14 @@ export interface UserProviderProps {
 }
 
 export function UserProvider({ children }: UserProviderProps): React.ReactElement {
-  const [state, setState] = useState<UserContextValue>({
+  const state = {
     user: null,
     error: null,
     isLoading: false,
-  });
+  };
 
   // const fetchUser = async (): Promise<User | null> => {
-  //   const authToken = localStorage.getItem('auth-token');
+  //   const authToken = sessionStorage.getItem('auth-token');
   //   const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
   //   const res = await axios.get<{ data: { user: User } }>('https://api.besttrade.company/api/v1/user/me', {
   //     headers: headers,

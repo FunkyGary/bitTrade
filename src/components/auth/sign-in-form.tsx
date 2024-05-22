@@ -15,7 +15,6 @@ import { paths } from '@/paths';
 export function SignInForm(): React.ReactElement {
   const router = useRouter();
   const [token, setToken] = React.useState<string | undefined>();
-  const [loginErrorMsg, setLoginErrorMsg] = React.useState<string | undefined>();
 
   const { data, error } = useQuery<string>({
     queryKey: ['getToken'],
@@ -35,7 +34,7 @@ export function SignInForm(): React.ReactElement {
   });
   React.useEffect(() => {
     if (data) {
-      localStorage.setItem('auth-token', data);
+      sessionStorage.setItem('auth-token', data);
       router.replace(paths.dashboard.overview);
     }
   }, [data, router]);

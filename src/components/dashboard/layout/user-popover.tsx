@@ -1,5 +1,6 @@
+'use client';
+
 import * as React from 'react';
-import RouterLink from 'next/link';
 import { redirect, useRouter } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -8,11 +9,10 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
-import { GearSix as GearSixIcon } from '@phosphor-icons/react/dist/ssr/GearSix';
 import { SignOut as SignOutIcon } from '@phosphor-icons/react/dist/ssr/SignOut';
-import { User as UserIcon } from '@phosphor-icons/react/dist/ssr/User';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { GoogleLogout } from 'react-google-login';
 
 import { User } from '@/types/user';
 import { paths } from '@/paths';
@@ -28,10 +28,10 @@ export interface UserPopoverProps {
 export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): React.JSX.Element {
   const { checkSession } = useUser();
 
-  const authToken = localStorage.getItem('auth-token');
+  const authToken = sessionStorage.getItem('auth-token');
   const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
 
-  const { isLoading, data, error } = useQuery<User>({
+  const { data, error } = useQuery<User>({
     queryKey: ['getMe'],
     queryFn: async () => {
       const res = await axios.get<User>('https://api.besttrade.company/api/v1/user/me', {
@@ -43,7 +43,7 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
 
   React.useEffect(() => {
     if (error) {
-      localStorage.removeItem('auth-token');
+      sessionStorage.removeItem('auth-token');
       redirect(paths.auth.signIn);
     }
   }, [error]);
@@ -53,8 +53,7 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
   const handleSignOut = React.useCallback(async (): Promise<void> => {
     try {
       // const { error } = await AuthClient.signOut();
-      localStorage.removeItem('auth-token');
-      console.log(localStorage.getItem('auth-token'));
+      sessionStorage.removeItem('auth-token');
       router.replace(paths.auth.signIn);
 
       // Refresh the auth state
@@ -83,6 +82,11 @@ export function UserPopover({ anchorEl, onClose, open }: UserPopoverProps): Reac
         </Typography>
       </Box>
       <Divider />
+      <GoogleLogout
+        clientId="23020782984-pimnbrtmtq2hjmr4eecsm06ddqcq2uj2.apps.googleusercontent.com"
+        buttonText="Logout"
+        onLogoutSuccess={handleSignOut}
+      />
       <MenuList disablePadding sx={{ p: '8px', '& .MuiMenuItem-root': { borderRadius: 1 } }}>
         <MenuItem onClick={handleSignOut}>
           <ListItemIcon>

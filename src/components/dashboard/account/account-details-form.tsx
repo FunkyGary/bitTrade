@@ -27,7 +27,11 @@ interface ExchangeApiData {
 }
 
 export function AccountDetailsForm(): React.ReactElement {
-  const authToken = localStorage.getItem('auth-token');
+  let authToken;
+  if (typeof window !== 'undefined') {
+    authToken = sessionStorage.getItem('auth-token') ? sessionStorage.getItem('auth-token') : '';
+  }
+  // const authToken = sessionStorage.getItem('auth-token');
   const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
   const { isLoading, error, data } = useQuery<ExchangeApiData[]>({
     queryKey: ['getExchangeApi'],
