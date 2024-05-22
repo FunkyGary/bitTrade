@@ -26,25 +26,54 @@ interface ExchangeApiData {
   secret: string;
 }
 
+interface ExchangeCredentials {
+  key: string;
+  secret: string;
+}
+
+interface Exchanges {
+  Binance: ExchangeCredentials;
+  Bitfinex: ExchangeCredentials;
+}
+
 export function AccountDetailsForm(): React.ReactElement {
+  const [exchangeAPI, setExchangeAPI] = React.useState<Exchanges>({
+    Binance: { key: '', secret: '' },
+    Bitfinex: { key: '', secret: '' },
+  });
   let authToken;
   if (typeof window !== 'undefined') {
     authToken = sessionStorage.getItem('auth-token') ? sessionStorage.getItem('auth-token') : '';
   }
-  // const authToken = sessionStorage.getItem('auth-token');
   const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
-  const { isLoading, error, data } = useQuery<ExchangeApiData[]>({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['getExchangeApi'],
     queryFn: async () => {
       const res = await axios.get<{ data: ExchangeApiData[] }>(
         'https://api.besttrade.company/api/v1/user/exchange-api',
-        {
-          headers: headers,
-        }
+        { headers: headers }
       );
       return res.data.data;
     },
   });
+
+  function formatter(inputArray: ExchangeApiData[]) {
+    const output = { Binance: { key: '', secret: '' }, Bitfinex: { key: '', secret: '' } };
+    inputArray.forEach((e) => {
+      if (e.exchange === 'Binance') {
+        output.Binance = { key: e.key, secret: e.secret };
+      } else if (e.exchange === 'Bitfinex') {
+        output.Bitfinex = { key: e.key, secret: e.secret };
+      }
+    });
+    return output;
+  }
+
+  React.useEffect(() => {
+    if (!isLoading && data) {
+      setExchangeAPI(formatter(data));
+    }
+  }, [data, isLoading]);
 
   if (error) {
     redirect(paths.auth.signIn);
@@ -63,34 +92,60 @@ export function AccountDetailsForm(): React.ReactElement {
           {isLoading ? (
             <CircularProgress />
           ) : (
-            <Grid container spacing={3}>
-              {data?.map((e) => (
-                <React.Fragment key={e.id}>
+            <>
+              <Grid container spacing={3}>
+                <React.Fragment>
                   <Grid item xs={12}>
                     <Box
                       component="img"
                       sx={{
                         maxWidth: { xs: 250, md: 150 },
                       }}
-                      alt={e.exchange}
-                      src={`/assets/${e.exchange}.png`}
+                      alt="Binance"
+                      src={`/assets/Binance.png`}
                     />
                   </Grid>
                   <Grid item md={6} xs={12}>
                     <FormControl fullWidth required>
-                      <InputLabel>{`${e.exchange} API key`}</InputLabel>
-                      <OutlinedInput value={e.key} label={`${e.exchange} API key`} />
+                      <InputLabel>Binance API key</InputLabel>
+                      <OutlinedInput value={exchangeAPI.Binance.key} label="Binance API key" />
                     </FormControl>
                   </Grid>
                   <Grid item md={6} xs={12}>
                     <FormControl fullWidth required>
-                      <InputLabel>{`${e.exchange} secret`}</InputLabel>
-                      <OutlinedInput value={e.secret} label={`${e.exchange} secret`} />
+                      <InputLabel>Binance API secret</InputLabel>
+                      <OutlinedInput value={exchangeAPI.Binance.secret} label="Binance API secret" />
                     </FormControl>
                   </Grid>
                 </React.Fragment>
-              ))}
-            </Grid>
+              </Grid>
+              <Grid container spacing={3}>
+                <React.Fragment>
+                  <Grid item xs={12}>
+                    <Box
+                      component="img"
+                      sx={{
+                        maxWidth: { xs: 250, md: 150 },
+                      }}
+                      alt="Binance"
+                      src={`/assets/Binance.png`}
+                    />
+                  </Grid>
+                  <Grid item md={6} xs={12}>
+                    <FormControl fullWidth required>
+                      <InputLabel>Bitfinex API key</InputLabel>
+                      <OutlinedInput value={exchangeAPI.Bitfinex.key} label="Bitfinex API key" />
+                    </FormControl>
+                  </Grid>
+                  <Grid item md={6} xs={12}>
+                    <FormControl fullWidth required>
+                      <InputLabel>Bitfinex API secret</InputLabel>
+                      <OutlinedInput value={exchangeAPI.Bitfinex.secret} label="Bitfinex API secret" />
+                    </FormControl>
+                  </Grid>
+                </React.Fragment>
+              </Grid>
+            </>
           )}
         </CardContent>
         <Divider />
