@@ -16,7 +16,7 @@ export function AuthGuard({ children }: AuthGuardProps): React.JSX.Element | nul
   const { error, isLoading } = useUser();
   const [isChecking, setIsChecking] = React.useState<boolean>(false);
   const checkPermissions = async (): Promise<void> => {
-    if (!sessionStorage.getItem('auth-token')) {
+    if (!window.sessionStorage.getItem('auth-token')) {
       router.replace(paths.auth.signIn);
     }
     if (isLoading) {

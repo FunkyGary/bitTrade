@@ -26,7 +26,7 @@ export function GuestGuard({ children }: GuestGuardProps): React.JSX.Element | n
     }
 
     if (sessionStorage.getItem('auth-token')) {
-      router.replace(paths.dashboard.overview);
+      sessionStorage.removeItem('auth-token');
       return;
     }
 

@@ -26,11 +26,7 @@ const defaultUser: User = {
 export function AccountInfo(): React.ReactElement {
   let authToken;
   if (typeof window !== 'undefined') {
-<<<<<<< HEAD
     authToken = sessionStorage.getItem('auth-token') ? sessionStorage.getItem('auth-token') : '';
-=======
-    authToken = localStorage.getItem('auth-token') ? localStorage.getItem('auth-token') : '';
->>>>>>> 12d2e1d (feature/user-sign-out)
   }
   const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
 

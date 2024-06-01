@@ -16,7 +16,11 @@ export function SignInForm(): React.ReactElement {
   const router = useRouter();
   const [token, setToken] = React.useState<string | undefined>();
 
-  const { data, error } = useQuery<string>({
+  React.useEffect(() => {
+    sessionStorage.removeItem('auth-token');
+  }, []);
+
+  const { error } = useQuery<string>({
     queryKey: ['getToken'],
     queryFn: async () => {
       if (!token) return '';
@@ -28,16 +32,12 @@ export function SignInForm(): React.ReactElement {
           },
         }
       );
+      window.sessionStorage.setItem('auth-token', res?.data?.data?.token);
+      router.replace(paths.dashboard.overview);
       return res?.data?.data?.token;
     },
     enabled: Boolean(token),
   });
-  React.useEffect(() => {
-    if (data) {
-      sessionStorage.setItem('auth-token', data);
-      router.replace(paths.dashboard.overview);
-    }
-  }, [data, router]);
 
   const login = useGoogleLogin({
     onSuccess: (tokenResponse: { access_token: string }) => {

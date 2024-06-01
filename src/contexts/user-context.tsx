@@ -23,7 +23,7 @@ export function UserProvider({ children }: UserProviderProps): React.ReactElemen
   };
 
   // const fetchUser = async (): Promise<User | null> => {
-  //   const authToken = sessionStorage.getItem('auth-token');
+  //   const authToken = sessionStorage .getItem('auth-token');
   //   const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
   //   const res = await axios.get<{ data: { user: User } }>('https://api.besttrade.company/api/v1/user/me', {
   //     headers: headers,

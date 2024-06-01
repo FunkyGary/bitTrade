@@ -22,10 +22,10 @@ export function SideNav(): React.JSX.Element {
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleSignOut = React.useCallback(async (): Promise<void> => {
+  const handleSignOut = () => {
     sessionStorage.removeItem('auth-token');
     router.replace(paths.auth.signIn);
-  }, []);
+  };
 
   return (
     <Box
