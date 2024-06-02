@@ -1,13 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import type { SxProps } from '@mui/material/styles';
 import { alpha, useTheme } from '@mui/material/styles';
-import { ArrowClockwise as ArrowClockwiseIcon } from '@phosphor-icons/react/dist/ssr/ArrowClockwise';
 import type { ApexOptions } from 'apexcharts';
 
 import { Chart } from '@/components/core/chart';
@@ -22,14 +20,7 @@ export function Sales({ chartSeries, sx }: SalesProps): React.JSX.Element {
 
   return (
     <Card sx={sx}>
-      <CardHeader
-        action={
-          <Button color="inherit" size="small" startIcon={<ArrowClockwiseIcon fontSize="var(--icon-fontSize-md)" />}>
-            Sync
-          </Button>
-        }
-        title="Sales"
-      />
+      <CardHeader title="損益報表" />
       <CardContent>
         <Chart height={350} options={chartOptions} series={chartSeries} type="line" width="100%" />
       </CardContent>

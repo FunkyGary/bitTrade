@@ -3,16 +3,14 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import Chip from '@mui/material/Chip';
-import Divider from '@mui/material/Divider';
 import type { SxProps } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import { FileX } from '@phosphor-icons/react/dist/ssr/FileX';
 import dayjs from 'dayjs';
 
 const statusMap = {
@@ -22,11 +20,15 @@ const statusMap = {
 } as const;
 
 export interface Order {
-  id: string;
-  customer: { name: string };
-  amount: number;
-  status: 'pending' | 'delivered' | 'refunded';
-  createdAt: Date;
+  amount: string;
+  created_at: string;
+  crypto: string;
+  id: number;
+  price: string;
+  trade_direction: string;
+  trade_rate: string;
+  updated_at: string;
+  user_id: number;
 }
 
 export interface LatestOrdersProps {
@@ -35,59 +37,48 @@ export interface LatestOrdersProps {
 }
 
 export function LatestOrders({ orders = [], sx }: LatestOrdersProps): React.JSX.Element {
-  const [page, setPage] = React.useState(2);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   return (
     <Card sx={sx}>
-      <CardHeader title="Latest orders" />
-      <Divider />
       <Box sx={{ overflowX: 'auto' }}>
-        <Table sx={{ minWidth: 800 }}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Order</TableCell>
-              <TableCell>Customer</TableCell>
-              <TableCell sortDirection="desc">Date</TableCell>
-              <TableCell>Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orders.map((order) => {
-              const { label, color } = statusMap[order.status] ?? { label: 'Unknown', color: 'default' };
-
-              return (
-                <TableRow hover key={order.id}>
-                  <TableCell>{order.id}</TableCell>
-                  <TableCell>{order.customer.name}</TableCell>
-                  <TableCell>{dayjs(order.createdAt).format('MMM D, YYYY')}</TableCell>
-                  <TableCell>
-                    <Chip color={color} label={label} size="small" />
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        {orders ? (
+          <Table sx={{ minWidth: 800 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell>created_at</TableCell>
+                <TableCell>crypto</TableCell>
+                <TableCell>trade_direction</TableCell>
+                <TableCell>amount</TableCell>
+                <TableCell>trade_rate</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orders.map((order) => {
+                return (
+                  <TableRow hover key={order.id}>
+                    <TableCell>{dayjs(order.created_at).format('MMM D, YYYY')}</TableCell>
+                    <TableCell>{order.crypto}</TableCell>
+                    <TableCell>{order.trade_direction}</TableCell>
+                    <TableCell>{order.amount}</TableCell>
+                    <TableCell>{order.trade_rate}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        ) : (
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            width="100%"
+            height="300px"
+            justifyContent="center"
+          >
+            <FileX size={128} />
+            <Typography variant="h4">No Data</Typography>
+          </Box>
+        )}
       </Box>
-      <Divider />
-      <TablePagination
-        component="div"
-        count={orders.length}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
-      />
     </Card>
   );
 }
