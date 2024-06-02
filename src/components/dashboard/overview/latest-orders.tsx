@@ -9,15 +9,9 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import { FileX } from '@phosphor-icons/react/dist/ssr/FileX';
 import dayjs from 'dayjs';
 
-const statusMap = {
-  pending: { label: 'Pending', color: 'warning' },
-  delivered: { label: 'Delivered', color: 'success' },
-  refunded: { label: 'Refunded', color: 'error' },
-} as const;
+import { NoData } from '@/components/core/no-data';
 
 export interface Order {
   amount: string;
@@ -36,7 +30,7 @@ export interface LatestOrdersProps {
   sx?: SxProps;
 }
 
-export function LatestOrders({ orders = [], sx }: LatestOrdersProps): React.JSX.Element {
+export function LatestOrders({ orders, sx }: LatestOrdersProps): React.JSX.Element {
   return (
     <Card sx={sx}>
       <Box sx={{ overflowX: 'auto' }}>
@@ -66,17 +60,7 @@ export function LatestOrders({ orders = [], sx }: LatestOrdersProps): React.JSX.
             </TableBody>
           </Table>
         ) : (
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            width="100%"
-            height="300px"
-            justifyContent="center"
-          >
-            <FileX size={128} />
-            <Typography variant="h4">No Data</Typography>
-          </Box>
+          <NoData />
         )}
       </Box>
     </Card>

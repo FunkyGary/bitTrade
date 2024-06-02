@@ -1,39 +1,23 @@
 'use client';
 
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import type { SxProps } from '@mui/material/styles';
 import { alpha, useTheme } from '@mui/material/styles';
-import { ArrowClockwise as ArrowClockwiseIcon } from '@phosphor-icons/react/dist/ssr/ArrowClockwise';
 import type { ApexOptions } from 'apexcharts';
 
 import { Chart } from '@/components/core/chart';
 
 export interface SalesProps {
   chartSeries: { name: string; data: number[] }[];
-  sx?: SxProps;
 }
 
-export function Orders({ chartSeries, sx }: SalesProps): React.JSX.Element {
+export function Orders({ chartSeries }: SalesProps): React.JSX.Element {
   const chartOptions = useChartOptions();
 
   return (
-    <Card sx={sx}>
-      <CardHeader
-        action={
-          <Button color="inherit" size="small" startIcon={<ArrowClockwiseIcon fontSize="var(--icon-fontSize-md)" />}>
-            Sync
-          </Button>
-        }
-        title="Sales"
-      />
-      <CardContent>
-        <Chart height={350} options={chartOptions} series={chartSeries} type="bar" width="100%" />
-      </CardContent>
-    </Card>
+    <CardContent>
+      <Chart height={350} options={chartOptions} series={chartSeries} type="bar" width="100%" />
+    </CardContent>
   );
 }
 
@@ -56,10 +40,6 @@ function useChartOptions(): ApexOptions {
     fill: { opacity: 1, type: 'solid' },
     stroke: {
       curve: 'straight',
-    },
-    title: {
-      text: 'Product Trends by Month',
-      align: 'left',
     },
     grid: {
       borderColor: theme.palette.divider,

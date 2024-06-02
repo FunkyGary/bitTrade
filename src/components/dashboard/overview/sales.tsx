@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
 import type { SxProps } from '@mui/material/styles';
 import { alpha, useTheme } from '@mui/material/styles';
 import type { ApexOptions } from 'apexcharts';
@@ -20,7 +19,6 @@ export function Sales({ chartSeries, sx }: SalesProps): React.JSX.Element {
 
   return (
     <Card sx={sx}>
-      <CardHeader title="損益報表" />
       <CardContent>
         <Chart height={350} options={chartOptions} series={chartSeries} type="line" width="100%" />
       </CardContent>
@@ -47,10 +45,6 @@ function useChartOptions(): ApexOptions {
     fill: { opacity: 1, type: 'solid' },
     stroke: {
       curve: 'straight',
-    },
-    title: {
-      text: 'Product Trends by Month',
-      align: 'left',
     },
     grid: {
       borderColor: theme.palette.divider,

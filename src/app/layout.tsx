@@ -8,9 +8,9 @@ import '@/styles/global.css';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { UserProvider } from '@/contexts/user-context';
 import { LocalizationProvider } from '@/components/core/localization-provider';
 import { ThemeProvider } from '@/components/core/theme-provider/theme-provider';
+import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,13 +31,13 @@ export default function Layout({ children }: LayoutProps): React.JSX.Element {
     <html lang="en">
       <body>
         <LocalizationProvider>
-          <GoogleOAuthProvider clientId="23020782984-pimnbrtmtq2hjmr4eecsm06ddqcq2uj2.apps.googleusercontent.com">
-            <QueryClientProvider client={queryClient}>
-              <UserProvider>
+          <AntdRegistry>
+            <GoogleOAuthProvider clientId="23020782984-pimnbrtmtq2hjmr4eecsm06ddqcq2uj2.apps.googleusercontent.com">
+              <QueryClientProvider client={queryClient}>
                 <ThemeProvider>{children}</ThemeProvider>
-              </UserProvider>
-            </QueryClientProvider>
-          </GoogleOAuthProvider>
+              </QueryClientProvider>
+            </GoogleOAuthProvider>
+          </AntdRegistry>
         </LocalizationProvider>
       </body>
     </html>
