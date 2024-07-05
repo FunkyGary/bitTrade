@@ -16,7 +16,8 @@ import dayjs, { Dayjs } from 'dayjs';
 import { paths } from '@/paths';
 import { NoData } from '@/components/core/no-data';
 import { Reports } from '@/components/dashboard/overview/reports';
-import { Sales } from '@/components/dashboard/overview/sales';
+
+// import { Sales } from '@/components/dashboard/overview/sales';
 
 export interface ReportData {
   amount: string;
@@ -116,12 +117,12 @@ export default function Main(): React.JSX.Element {
           </Grid>
           {data ? (
             <>
-              <Grid lg={12} xs={12}>
+              {/* <Grid lg={12} xs={12}>
                 <Sales
                   chartSeries={[{ name: '損益', data: [18, 16, 5, 8, 3, 14, 14, 16, 17, 19, 18, 20] }]}
                   sx={{ height: '100%' }}
                 />
-              </Grid>
+              </Grid> */}
               <Grid lg={12} md={12} xs={12}>
                 <Reports reports={data} sx={{ height: '100%' }} />
               </Grid>
