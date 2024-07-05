@@ -48,6 +48,13 @@ function inputFormatter(inputArray: ExchangeApiData[]) {
   return output;
 }
 
+function outputFormatter(exchangeAPI: Exchanges) {
+  const output = [];
+  output.push({ exchange: 'Binance', key: exchangeAPI.Binance.key, secret: exchangeAPI.Binance.secret });
+  output.push({ exchange: 'Bitfinex', key: exchangeAPI.Binance.key, secret: exchangeAPI.Binance.secret });
+  return output;
+}
+
 export function AccountDetailsForm(): React.ReactElement {
   const [exchangeAPI, setExchangeAPI] = React.useState<Exchanges>({
     Binance: { key: '', secret: '' },
@@ -73,7 +80,7 @@ export function AccountDetailsForm(): React.ReactElement {
     mutationFn: async () => {
       const res = await axios.post<{ data: ExchangeApiData[] }>(
         'https://api.besttrade.company/api/v1/user/exchange-api',
-        Object.entries(exchangeAPI),
+        outputFormatter(exchangeAPI),
         { headers }
       );
       return res.data.data;

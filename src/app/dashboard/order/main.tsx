@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import Card from '@mui/material/Card';
+// import Card from '@mui/material/Card';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -12,7 +12,8 @@ import axios from 'axios';
 import { paths } from '@/paths';
 import { NoData } from '@/components/core/no-data';
 import { LatestOrders } from '@/components/dashboard/overview/latest-orders';
-import { Orders } from '@/components/dashboard/overview/orders';
+
+// import { Orders } from '@/components/dashboard/overview/orders';
 
 export interface Order {
   amount: string;
@@ -63,7 +64,7 @@ export default function Main(): React.JSX.Element {
           </Grid>
           {data ? (
             <>
-              <Grid lg={12} xs={12}>
+              {/* <Grid lg={12} xs={12}>
                 <Card sx={{ height: '100%' }}>
                   <Orders
                     chartSeries={[
@@ -72,7 +73,7 @@ export default function Main(): React.JSX.Element {
                     ]}
                   />
                 </Card>
-              </Grid>
+              </Grid> */}
               <Grid lg={12} md={12} xs={12}>
                 <LatestOrders orders={data} sx={{ height: '100%' }} />
               </Grid>
