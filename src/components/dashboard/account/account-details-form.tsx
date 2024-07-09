@@ -11,11 +11,14 @@ import CardHeader from '@mui/material/CardHeader';
 import CircularProgress from '@mui/material/CircularProgress';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import Switch from '@mui/material/Switch';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 import { paths } from '@/paths';
 
@@ -51,7 +54,7 @@ function inputFormatter(inputArray: ExchangeApiData[]) {
 function outputFormatter(exchangeAPI: Exchanges) {
   const output = [];
   output.push({ exchange: 'Binance', key: exchangeAPI.Binance.key, secret: exchangeAPI.Binance.secret });
-  output.push({ exchange: 'Bitfinex', key: exchangeAPI.Binance.key, secret: exchangeAPI.Binance.secret });
+  output.push({ exchange: 'Bitfinex', key: exchangeAPI.Bitfinex.key, secret: exchangeAPI.Bitfinex.secret });
   return output;
 }
 
@@ -60,6 +63,14 @@ export function AccountDetailsForm(): React.ReactElement {
     Binance: { key: '', secret: '' },
     Bitfinex: { key: '', secret: '' },
   });
+  const [checked, setChecked] = React.useState(false);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setExchangeAPI({
+      ...exchangeAPI,
+      Bitfinex: { key: '', secret: '' },
+    });
+    setChecked(event.target.checked);
+  };
   let authToken;
   if (typeof window !== 'undefined') {
     authToken = sessionStorage.getItem('auth-token') ? sessionStorage.getItem('auth-token') : '';
@@ -86,7 +97,11 @@ export function AccountDetailsForm(): React.ReactElement {
       return res.data.data;
     },
     onSuccess: (response) => {
+      toast.success('儲存成功');
       setExchangeAPI(inputFormatter(response));
+    },
+    onError: () => {
+      toast.error('儲存失敗');
     },
   });
 
@@ -159,7 +174,7 @@ export function AccountDetailsForm(): React.ReactElement {
                 </Grid>
               </Grid>
               <Grid container spacing={3}>
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                   <Box
                     component="img"
                     sx={{
@@ -168,37 +183,42 @@ export function AccountDetailsForm(): React.ReactElement {
                     alt="Bitfinex"
                     src={`/assets/Bitfinex.png`}
                   />
+                  <FormControlLabel control={<Switch checked={checked} onChange={handleChange} />} label="啟用" />
                 </Grid>
-                <Grid item md={6} xs={12}>
-                  <FormControl fullWidth required>
-                    <InputLabel>Bitfinex API key</InputLabel>
-                    <OutlinedInput
-                      value={exchangeAPI.Bitfinex.key}
-                      label="Bitfinex API key"
-                      onChange={(event) => {
-                        setExchangeAPI({
-                          ...exchangeAPI,
-                          Bitfinex: { ...exchangeAPI.Bitfinex, key: event.target.value },
-                        });
-                      }}
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item md={6} xs={12}>
-                  <FormControl fullWidth required>
-                    <InputLabel>Bitfinex API secret</InputLabel>
-                    <OutlinedInput
-                      value={exchangeAPI.Bitfinex.secret}
-                      label="Bitfinex API secret"
-                      onChange={(event) => {
-                        setExchangeAPI({
-                          ...exchangeAPI,
-                          Bitfinex: { ...exchangeAPI.Bitfinex, secret: event.target.value },
-                        });
-                      }}
-                    />
-                  </FormControl>
-                </Grid>
+                {checked && (
+                  <>
+                    <Grid item md={6} xs={12}>
+                      <FormControl fullWidth required>
+                        <InputLabel>Bitfinex API key</InputLabel>
+                        <OutlinedInput
+                          value={exchangeAPI.Bitfinex.key}
+                          label="Bitfinex API key"
+                          onChange={(event) => {
+                            setExchangeAPI({
+                              ...exchangeAPI,
+                              Bitfinex: { ...exchangeAPI.Bitfinex, key: event.target.value },
+                            });
+                          }}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                      <FormControl fullWidth required>
+                        <InputLabel>Bitfinex API secret</InputLabel>
+                        <OutlinedInput
+                          value={exchangeAPI.Bitfinex.secret}
+                          label="Bitfinex API secret"
+                          onChange={(event) => {
+                            setExchangeAPI({
+                              ...exchangeAPI,
+                              Bitfinex: { ...exchangeAPI.Bitfinex, secret: event.target.value },
+                            });
+                          }}
+                        />
+                      </FormControl>
+                    </Grid>
+                  </>
+                )}
               </Grid>
             </>
           )}
