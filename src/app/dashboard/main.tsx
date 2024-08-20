@@ -45,7 +45,6 @@ export default function Main(): React.JSX.Element {
     authToken = sessionStorage.getItem('auth-token') ? sessionStorage.getItem('auth-token') : '';
   }
   const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
-
   const { isLoading, data, error, refetch } = useQuery<ReportData[]>({
     queryKey: ['getReport'],
     queryFn: async () => {
@@ -53,8 +52,8 @@ export default function Main(): React.JSX.Element {
         headers,
         params: {
           exchange: exchange,
-          start_time: value[0]?.valueOf(),
-          end_time: value[1]?.valueOf(),
+          start_time: value[0]?.valueOf() ?? 0 / 1000,
+          end_time: value[1]?.valueOf() ?? 0 / 1000,
         },
       });
       return res.data.data;
