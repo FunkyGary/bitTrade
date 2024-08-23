@@ -52,8 +52,8 @@ export default function Main(): React.JSX.Element {
         headers,
         params: {
           exchange: exchange,
-          start_time: value[0]?.valueOf() ? value[0]?.valueOf() / 1000 : 0,
-          end_time: value[1]?.valueOf() ? value[1]?.valueOf() / 1000 : 0,
+          start_time: value[0]?.valueOf() ? Math.floor(value[0]?.valueOf() / 1000) : 0,
+          end_time: value[1]?.valueOf() ? Math.floor(value[1]?.valueOf() / 1000) : 0,
         },
       });
       return res.data.data;
