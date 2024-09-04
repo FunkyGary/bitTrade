@@ -46,7 +46,7 @@ export function Reports({ reports, sx }: LatestOrdersProps): React.JSX.Element {
             {reports?.map((report) => {
               return (
                 <TableRow hover key={report.id}>
-                  <TableCell>{dayjs(report.report_time).format('MMM D, YYYY')}</TableCell>
+                  <TableCell>{dayjs(report.report_time * 1000).format('MMM D, YYYY')}</TableCell>
                   <TableCell>{report.exchange}</TableCell>
                   <TableCell>{report.crypto}</TableCell>
                   <TableCell>{report.amount}</TableCell>

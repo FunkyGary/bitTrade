@@ -22,6 +22,7 @@ export interface Order {
   id: number;
   price: string;
   trade_direction: string;
+  order_time: number;
   trade_rate: string;
   updated_at: string;
   user_id: number;

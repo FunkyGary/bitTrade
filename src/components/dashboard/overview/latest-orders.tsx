@@ -22,6 +22,7 @@ export interface Order {
   trade_direction: string;
   trade_rate: string;
   updated_at: string;
+  order_time: number;
   user_id: number;
 }
 
@@ -49,7 +50,7 @@ export function LatestOrders({ orders, sx }: LatestOrdersProps): React.JSX.Eleme
               {orders.map((order) => {
                 return (
                   <TableRow hover key={order.id}>
-                    <TableCell>{dayjs(order.created_at).format('MMM D, YYYY')}</TableCell>
+                    <TableCell>{dayjs(order.order_time * 1000).format('MMM D, YYYY')}</TableCell>
                     <TableCell>{order.crypto}</TableCell>
                     <TableCell>{order.trade_direction}</TableCell>
                     <TableCell>{order.amount}</TableCell>
